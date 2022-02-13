@@ -6,15 +6,26 @@
 //
 
 import SwiftUI
-
+import GoogleMobileAds
 @main
 struct ExpenseFinalApp: App {
     let persistenceController = PersistenceController.shared
+    init() {
 
+            GADMobileAds.sharedInstance().start(completionHandler: nil)
+        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [ GADSimulatorID ]
+    }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NewMainView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.locale, Locale(identifier: "zh-cn"))
+                .font(MyFont.body)
         }
+
     }
+}
+struct MyFont {
+  static let title = Font.custom("MaShanZheng-Regular", size: 24.0)
+  static let body = Font.custom("MaShanZheng-Regular", size: 20.0)
 }
